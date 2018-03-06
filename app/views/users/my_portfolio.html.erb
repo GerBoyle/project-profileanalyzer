@@ -17,3 +17,16 @@
         
     <% end %>
 </div>
+
+
+<% if @stock %>
+    <div class="well results-block"> 
+        <strong>Login: </strong><%= @stock["login"] %></br>
+        <strong>ID: </strong><%= @stock["id"] %></br>
+        <strong>Name: </strong><%= @stock["name"] %></br>
+        <strong>Location: </strong><%= @stock["location"] %></br>
+        <strong>Public Repos: </strong><%= @stock["public_repos"] %></br>
+        <strong>Public Number of Followers: </strong><%= @stock["followers"] %></br>
+        <strong>Public Number Following: </strong><%= @stock["following"] %></br>
+    </div>
+<% end %>
