@@ -6,7 +6,7 @@ class Stock < ApplicationRecord
         
     
        
-        looked_up_stock
+        #looked_up_stock
     end
     
 
