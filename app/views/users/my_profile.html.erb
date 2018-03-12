@@ -21,6 +21,13 @@
 
 <% if @stock %>
     <div class="well results-block"> 
+        <strong>ID: </strong><%= @stock[0]["id"] %></br>
+        <strong>Login: </strong><%= @stock[0]["name"] %></br>
+        
+    </div>
+<% end %>
+
+<% if @false %>
         <strong>Login: </strong><%= @stock["login"] %></br>
         <strong>ID: </strong><%= @stock["id"] %></br>
         <strong>Name: </strong><%= @stock["name"] %></br>
@@ -28,6 +35,11 @@
         <strong>Public Repos: </strong><%= @stock["public_repos"] %></br>
         <strong>Public Number of Followers: </strong><%= @stock["followers"] %></br>
         <strong>Public Number Following: </strong><%= @stock["following"] %></br>
+        <strong>Type: </strong><%= @stock["type"] %></br>
+        <strong>Blog: </strong><%= @stock["blog"] %></br>
+        <strong>E mail: </strong><%= @stock["email"] %></br>
+        <strong>Hireable: </strong><%= @stock["hireable"] %></br>
+        <strong>Bio: </strong><%= @stock["bio"] %></br>
+        <strong>Date joined GitHub: </strong><%= @stock["created_at"] %></br>
         <strong>Avatar URL: </strong><%= link_to @stock["avatar_url"] %></br>
-    </div>
 <% end %>
