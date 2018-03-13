@@ -1,8 +1,8 @@
 <h1>Create User Profile</h1>
 
 <h3>Search for GitHub User</h3>
-<div id="stock-lookup">
-    <%= form_tag search_profile_path, method: :get, id: "stock-lookup-form" do %>
+<div id="profile-lookup">
+    <%= form_tag search_profile_path, method: :get, id: "profile-lookup-form" do %>
         <div class="form-group row no-padding text-center col-md-12">
             <div class="col-md-10">
                 <%= text_field_tag :stock, params[:stock], placeholder: "GitHub User Name", autofocus: true, class: "form-control search-box input-lg" %>
@@ -16,18 +16,11 @@
         </div>
         
     <% end %>
-</div>
 
+</div>
 
 <% if @stock %>
     <div class="well results-block"> 
-        <strong>ID: </strong><%= @stock[0]["id"] %></br>
-        <strong>Login: </strong><%= @stock[0]["name"] %></br>
-        
-    </div>
-<% end %>
-
-<% if @false %>
         <strong>Login: </strong><%= @stock["login"] %></br>
         <strong>ID: </strong><%= @stock["id"] %></br>
         <strong>Name: </strong><%= @stock["name"] %></br>
@@ -42,4 +35,28 @@
         <strong>Bio: </strong><%= @stock["bio"] %></br>
         <strong>Date joined GitHub: </strong><%= @stock["created_at"] %></br>
         <strong>Avatar URL: </strong><%= link_to @stock["avatar_url"] %></br>
+    </div>
+<% end %>
+
+<% if @false %>
+    <% if @stock1 %>
+        <div class="well results-block"> 
+            <strong>Repo ID: </strong><%= @stock[0]["id"] %></br>
+            <strong>Repo Name: </strong><%= @stock[0]["name"] %></br>
+            <strong>Owner: </strong><%= @stock[0]["owner"]["login"] %></br>
+            <strong>ID: </strong><%= @stock[0]["owner"]["id"] %></br>
+            <strong>Name: </strong><%= @stock[0]["owner"]["name"] %></br>
+            <strong>Location: </strong><%= @stock[0]["owner"]["location"] %></br>
+            <strong>Public Repos: </strong><%= @stock[0]["owner"]["public_repos"] %></br>
+            <strong>Public Number of Followers: </strong><%= @stock[0]["owner"]["followers"] %></br>
+            <strong>Public Number Following: </strong><%= @stock[0]["owner"]["following"] %></br>
+            <strong>Type: </strong><%= @stock[0]["owner"]["type"] %></br>
+            <strong>Blog: </strong><%= @stock[0]["owner"]["blog"] %></br>
+            <strong>E mail: </strong><%= @stock[0]["owner"]["email"] %></br>
+            <strong>Hireable: </strong><%= @stock[0]["owner"]["hireable"] %></br>
+            <strong>Bio: </strong><%= @stock[0]["owner"]["bio"] %></br>
+            <strong>Date joined GitHub: </strong><%= @stock[0]["owner"]["created_at"] %></br>
+            <strong>Avatar URL: </strong><%= link_to @stock[0]["owner"]["avatar_url"] %></br>
+        </div>
+    <% end %>
 <% end %>
