@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   
   root 'welcome#index'
   get 'my_profile', to: "users#my_profile"
-  get 'search_profile', to:'stocks#search'
-  
+  get 'search_profile', to:'profiles#search'
 end
