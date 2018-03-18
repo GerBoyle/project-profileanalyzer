@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
    def search
        if params[:profile].present?
           @profile = Profile.new_from_lookup(params[:profile])
+          @person = Profile.new_from_lookup1(params[:profile])
           render 'users/my_profile'
        else
           flash[:danger] = "You have entered an empty search string"
@@ -10,5 +11,6 @@ class ProfilesController < ApplicationController
        end
    end
     
+
  
 end

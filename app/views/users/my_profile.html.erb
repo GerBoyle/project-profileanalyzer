@@ -39,8 +39,10 @@
     <% end %>
 <% end %>
 
-    <% if @profile %>
+<% if @profile %>
         <div class="well results-block">
+                <strong>Location: </strong><%= @person["location"] %></br>
+            
                 <% for i in 0..@profile.length-1 do %>
                     <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
                     <strong>Repo Name: </strong><%= @profile[i]["name"] %></br></br>
@@ -55,5 +57,4 @@
                     <% flash[:danger] = "User entered has no public Repos" %>
                 <% end %>
         </div>
-    <% end %>
-
+<% end %>
