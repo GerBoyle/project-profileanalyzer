@@ -10,7 +10,5 @@ class ProfilesController < ApplicationController
           redirect_to my_profile_path
        end
    end
-    
-
  
 end

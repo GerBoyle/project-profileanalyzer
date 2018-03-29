@@ -14,9 +14,7 @@
                 <% end %>
             </div>
         </div>
-        
     <% end %>
-
 </div>
 
 <% if @profile %>
@@ -24,49 +22,54 @@
                 <!--Div that will hold the pie chart-->
                 <div id="chart_div"></div></br>
                 
-                <h4><u>Person Information:</u></h4>
-                <tr>
-                <td><strong>Name: </strong><%= @person["name"] %></td>
-                <td><strong>Number of Public Repos: </strong><%= @person["public_repos"] %></td>
-                <td><strong>Location: </strong><%= @person["location"] %></td></br>
-                </tr>
-                <% if @profile[0].present? %>
-                    <strong>User Name: </strong><%= @profile[0]["owner"]["login"] %></br>
-                    <strong>User ID: </strong><%= @profile[0]["owner"]["id"] %>
-                    <hr>
-                    <h4><u>Repo Information:</u></h4>
-                    <% @HTML = 0 %>
-                    <% @Ruby = 0 %>
-                    <% @JavaScript = 0 %>
-                    <% @CSS = 0 %>
-                    <% @PHP = 0 %>
-                    <% for i in 0..@profile.length-1 do %>
-                        <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
-                        <strong>Repo Name: </strong><%= @profile[i]["name"] %></br>
-                        <strong>Languages: </strong><%= HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"}) %></br>
-                        <% @HTML += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages',  
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["HTML"].to_i %>
-                        <% @Ruby += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["Ruby"].to_i %>
-                        <% @JavaScript += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["JavaScript"].to_i %>
-                        <% @CSS += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["CSS"].to_i %>
-                        <% @PHP += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["PHP"].to_i %></br>
-                    <% end %>
-                    <hr>
+                <h4><u>Personal Information:</u></h4>
+                <div class="col-md-12">
+                    <strong>Name: </strong><%= @person["name"] %></br>
+                    <strong>Number of Public Repos: </strong><%= @person["public_repos"] %></br>
+                    <strong>Location: </strong><%= @person["location"] %></br>
+                   
+                   
+                    <% if @profile[0].present? %>
+                        <strong>User Name: </strong><%= @profile[0]["owner"]["login"] %></br>
+                        <strong>User ID: </strong><%= @profile[0]["owner"]["id"] %>
+                        <hr>
+                </div> 
+                
+                        <h4><u>Repo Information:</u></h4>
+                <div class="col-md-12">
+                        <% @HTML = 0 %>
+                        <% @Ruby = 0 %>
+                        <% @JavaScript = 0 %>
+                        <% @CSS = 0 %>
+                        <% @PHP = 0 %>
+                        <% for i in 0..@profile.length-1 do %>
+                            <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
+                            <strong>Repo Name: </strong><%= @profile[i]["name"] %></br>
+                            <% languages = HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                                :basic_auth => {:username => "GerBoyle", :password => "#"}) %>
+                            <strong>Languages: </strong><%= languages %></br>
+                            <% @HTML += languages["HTML"].to_i %>
+                            <% @Ruby += languages["Ruby"].to_i %>
+                            <% @JavaScript += languages["JavaScript"].to_i %>
+                            <% @CSS += languages["CSS"].to_i %>
+                            <% @PHP += languages["PHP"].to_i %></br>
+                        <% end %>
+                        <hr>
+                </div>
+                
                         <h4><u>Languages Total Information:</u></h4>
+                        
+                <div class="col-md-12">
                         <strong>HTML Total: </strong><%= @HTML %></br>
                         <strong>Ruby Total: </strong><%= @Ruby %></br>
-                        <strong>JavaScriptTotal: </strong><%= @JavaScript %></br>
-                        <strong>CSS: </strong><%= @CSS %></br>
-                        <strong>PHP: </strong><%= @PHP %></br>
-                        
+                        <strong>JavaScript Total: </strong><%= @JavaScript %></br>
+                        <strong>CSS Total: </strong><%= @CSS %></br>
+                        <strong>PHP Total: </strong><%= @PHP %></br>
+                
                     <% else %>
                         <% flash[:danger] = "User entered has no public Repos" %>
-                <% end %>
+                    <% end %>
+                </div>
         </div>
 <% end %>
 
