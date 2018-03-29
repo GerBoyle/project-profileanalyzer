@@ -18,43 +18,100 @@
     <% end %>
 
 </div>
-<% if @false %>
-    <% if @profile %>
-        <div class="well results-block"> 
-            <strong>Login: </strong><%= @profile["login"] %></br>
-            <strong>ID: </strong><%= @profile["id"] %></br>
-            <strong>Name: </strong><%= @profile["name"] %></br>
-            <strong>Location: </strong><%= @profile["location"] %></br>
-            <strong>Public Repos: </strong><%= @profile["public_repos"] %></br>
-            <strong>Public Number of Followers: </strong><%= @profile["followers"] %></br>
-            <strong>Public Number Following: </strong><%= @profile["following"] %></br>
-            <strong>Type: </strong><%= @profile["type"] %></br>
-            <strong>Blog: </strong><%= @profile["blog"] %></br>
-            <strong>E mail: </strong><%= @profile["email"] %></br>
-            <strong>Hireable: </strong><%= @profile["hireable"] %></br>
-            <strong>Bio: </strong><%= @profile["bio"] %></br>
-            <strong>Date joined GitHub: </strong><%= @profile["created_at"] %></br>
-            <strong>Avatar URL: </strong><%= link_to @profile["avatar_url"] %></br>
-        </div>
-    <% end %>
-<% end %>
 
 <% if @profile %>
         <div class="well results-block">
-                <strong>Location: </strong><%= @person["location"] %></br>
-            
-                <% for i in 0..@profile.length-1 do %>
-                    <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
-                    <strong>Repo Name: </strong><%= @profile[i]["name"] %></br></br>
-                <% end %></br>
+                <!--Div that will hold the pie chart-->
+                <div id="chart_div"></div></br>
                 
+                <h4><u>Person Information:</u></h4>
+                <tr>
+                <td><strong>Name: </strong><%= @person["name"] %></td>
+                <td><strong>Number of Public Repos: </strong><%= @person["public_repos"] %></td>
+                <td><strong>Location: </strong><%= @person["location"] %></td></br>
+                </tr>
                 <% if @profile[0].present? %>
-                    <strong>Owner: </strong><%= @profile[0]["owner"]["login"] %></br>
-                    <strong>User ID: </strong><%= @profile[0]["owner"]["id"] %></br>
-                    <strong>Type: </strong><%= @profile[0]["owner"]["type"] %></br>
-                    <strong>Avatar URL: </strong><%= link_to @profile[0]["owner"]["avatar_url"] %></br>
-                <% else %>
-                    <% flash[:danger] = "User entered has no public Repos" %>
+                    <strong>User Name: </strong><%= @profile[0]["owner"]["login"] %></br>
+                    <strong>User ID: </strong><%= @profile[0]["owner"]["id"] %>
+                    <hr>
+                    <h4><u>Repo Information:</u></h4>
+                    <% @HTML = 0 %>
+                    <% @Ruby = 0 %>
+                    <% @JavaScript = 0 %>
+                    <% @CSS = 0 %>
+                    <% @PHP = 0 %>
+                    <% for i in 0..@profile.length-1 do %>
+                        <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
+                        <strong>Repo Name: </strong><%= @profile[i]["name"] %></br>
+                        <strong>Languages: </strong><%= HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"}) %></br>
+                        <% @HTML += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages',  
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["HTML"].to_i %>
+                        <% @Ruby += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["Ruby"].to_i %>
+                        <% @JavaScript += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["JavaScript"].to_i %>
+                        <% @CSS += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["CSS"].to_i %>
+                        <% @PHP += HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
+                                                            :basic_auth => {:username => "GerBoyle", :password => "#"})["PHP"].to_i %></br>
+                    <% end %>
+                    <hr>
+                        <h4><u>Languages Total Information:</u></h4>
+                        <strong>HTML Total: </strong><%= @HTML %></br>
+                        <strong>Ruby Total: </strong><%= @Ruby %></br>
+                        <strong>JavaScriptTotal: </strong><%= @JavaScript %></br>
+                        <strong>CSS: </strong><%= @CSS %></br>
+                        <strong>PHP: </strong><%= @PHP %></br>
+                        
+                    <% else %>
+                        <% flash[:danger] = "User entered has no public Repos" %>
                 <% end %>
         </div>
 <% end %>
+
+
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Languages');
+        data.addColumn('number', 'Bytes');
+        data.addRows([
+          ['HTML', <%= @HTML %>],
+          ['Ruby', <%= @Ruby %>],
+          ['JavaScript', <%= @JavaScript %>],
+          ['CSS', <%= @CSS %>],
+          ['PHP', <%= @PHP %>]
+        ]);
+
+        // Set chart options
+        var options = {'title':'GitHub Languages Pie Chart',
+                       'width':800,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+</html>
+
+
