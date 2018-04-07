@@ -46,7 +46,7 @@
                             <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
                             <strong>Repo Name: </strong><%= @profile[i]["name"] %></br>
                             <% languages = HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages', 
-                                                                :basic_auth => {:username => "GerBoyle", :password => "#"}) %>
+                                                                :basic_auth => {:username => "GerBoyle", :password => "**"}) %>
                             <strong>Languages: </strong><%= languages %></br>
                             <% @HTML += languages["HTML"].to_i %>
                             <% @Ruby += languages["Ruby"].to_i %>

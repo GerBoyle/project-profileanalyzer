@@ -30,6 +30,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">GitHub Profile Analyze</a>
+        
+        <% if @false %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li><%= link_to "Link1", "/path1"  %></li>
@@ -37,6 +39,7 @@
             <li><%= link_to "Link3", "/path3"  %></li>
           </ul>
         </div>
+        <% end %>
       </div>
     </div>
 
