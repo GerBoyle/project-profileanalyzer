@@ -42,16 +42,19 @@
                         <% @JavaScript = 0 %>
                         <% @CSS = 0 %>
                         <% @PHP = 0 %>
+                        <% @n = 1 %>
                         <% for i in 0..@profile.length-1 do %>
-                            <strong>Repo ID: </strong><%= @profile[i]["id"] %></br>
+                            <strong><%= [@n] %> Repo ID: </strong><%= @profile[i]["id"] %></br>
                             <strong>Repo Name: </strong><%= @profile[i]["name"] %></br>
-                            <% languages = HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages') %>
-                            <strong>Languages: </strong><%= languages %></br>
-                            <% @HTML += languages["HTML"].to_i %>
-                            <% @Ruby += languages["Ruby"].to_i %>
-                            <% @JavaScript += languages["JavaScript"].to_i %>
-                            <% @CSS += languages["CSS"].to_i %>
-                            <% @PHP += languages["PHP"].to_i %></br>
+                            <% @languages = HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages',
+                                                                    :basic_auth => {:username => "GerBoyle", :password => ENV['GITHUB_TOKEN']}) %>
+                            <strong>Languages: </strong><%= @languages %></br>
+                            <% @n = @n + 1 %>
+                            <% @HTML += @languages["HTML"].to_i %>
+                            <% @Ruby += @languages["Ruby"].to_i %>
+                            <% @JavaScript += @languages["JavaScript"].to_i %>
+                            <% @CSS += @languages["CSS"].to_i %>
+                            <% @PHP += @languages["PHP"].to_i %></br>
                         <% end %>
                         <hr>
                 </div>
@@ -68,6 +71,7 @@
                     <% else %>
                         <% flash[:danger] = "User entered has no public Repos" %>
                     <% end %>
+                    <hr>
                 </div>
         </div>
 <% end %>
