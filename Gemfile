@@ -12,7 +12,6 @@ gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
 gem 'jquery-rails'
-gem 'stock_quote'
 gem 'httparty'
 gem 'font-awesome-rails'
 
@@ -22,6 +21,7 @@ end
 
 group :development do
   gem 'sqlite3'
+  gem 'simplecov', require: false
 end
 
 

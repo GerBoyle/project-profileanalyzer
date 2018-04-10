@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303174252) do
+ActiveRecord::Schema.define(version: 20180410132246) do
+
+  create_table "people", force: :cascade do |t|
+    t.string "username"
+    t.integer "num_repos"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "stocks", force: :cascade do |t|
     t.string "ticker"
