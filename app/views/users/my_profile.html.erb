@@ -42,6 +42,7 @@
                         <% @JavaScript = 0 %>
                         <% @CSS = 0 %>
                         <% @PHP = 0 %>
+                        <% @Java = 0 %>
                         <% @n = 1 %>
                         <% for i in 0..@profile.length-1 do %>
                             <strong><%= [@n] %> Repo ID: </strong><%= @profile[i]["id"] %></br>
@@ -53,13 +54,15 @@
                             <strong>Ruby: </strong><%= @languages["Ruby"].to_i %> bytes,
                             <strong>JavaScript: </strong><%= @languages["JavaScript"].to_i %> bytes,
                             <strong>CSS: </strong><%= @languages["CSS"].to_i %> bytes, 
-                            <strong>PHP: </strong><%= @languages["PHP"].to_i %> bytes </br>
+                            <strong>PHP: </strong><%= @languages["PHP"].to_i %> bytes,
+                            <strong>Java: </strong><%= @languages["Java"].to_i %> bytes</br></br>
                             <% @n = @n + 1 %>
                             <% @HTML += @languages["HTML"].to_i %>
                             <% @Ruby += @languages["Ruby"].to_i %>
                             <% @JavaScript += @languages["JavaScript"].to_i %>
+                            <% @PHP += @languages["PHP"].to_i %>
                             <% @CSS += @languages["CSS"].to_i %>
-                            <% @PHP += @languages["PHP"].to_i %></br>
+                            <% @Java += @languages["Java"].to_i %>
                         <% end %>
                         <hr>
                 </div>
@@ -72,7 +75,7 @@
                         <strong>JavaScript Total: </strong><%= @JavaScript %> bytes</br>
                         <strong>CSS Total: </strong><%= @CSS %> bytes</br>
                         <strong>PHP Total: </strong><%= @PHP %> bytes</br>
-                
+                        <strong>Java Total: </strong><%= @Java %> bytes</br></br>
                     <% else %>
                         <% flash[:danger] = "User entered has no public Repos" %>
                     <% end %>
@@ -108,7 +111,8 @@
           ['Ruby', <%= @Ruby %>],
           ['JavaScript', <%= @JavaScript %>],
           ['CSS', <%= @CSS %>],
-          ['PHP', <%= @PHP %>]
+          ['PHP', <%= @PHP %>],
+          ['Java', <%= @Java %>]
         ]);
 
         // Set chart options
