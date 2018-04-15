@@ -7,19 +7,21 @@ class UserTest < ActiveSupport::TestCase
   
   
   def setup
-    @user = User.new(name: "username")
+    @user = User.new(email: "Ger_Boyle@yahoo.ier")
   end
   
-  
+  test "email is valid" do
+    assert @user.valid?
+  end
 
-  test "name should be present" do
+  test "e mail  should be present" do
     @user.email = ""
     assert_not @user.valid?
   end
   
   test "email should be unique" do
     @user.save
-    user2 = User.new(email: "username")
+    user2 = User.new(email: "User")
     assert_not user2.valid?
   end
   

@@ -1,6 +1,12 @@
 {
   "MiniTest": {
     "coverage": {
+      "/home/ubuntu/workspace/project-profileanalyzer/app/models/person.rb": [
+        1,
+        null,
+        null,
+        null
+      ],
       "/home/ubuntu/workspace/project-profileanalyzer/app/mailers/application_mailer.rb": [
         0,
         0,
@@ -106,6 +112,6 @@
         0
       ]
     },
-    "timestamp": 1523365708
+    "timestamp": 1523668666
   }
 }

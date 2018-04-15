@@ -49,6 +49,11 @@
                             <% @languages = HTTParty.get('https://api.github.com/repos/' +  @profile[i]["full_name"] + '/languages',
                                                                     :basic_auth => {:username => "GerBoyle", :password => ENV['GITHUB_TOKEN']}) %>
                             <strong>Languages: </strong><%= @languages %></br>
+                            <strong>Languages --- HTML: </strong><%= @languages["HTML"].to_i %> bytes, 
+                            <strong>Ruby: </strong><%= @languages["Ruby"].to_i %> bytes,
+                            <strong>JavaScript: </strong><%= @languages["JavaScript"].to_i %> bytes,
+                            <strong>CSS: </strong><%= @languages["CSS"].to_i %> bytes, 
+                            <strong>PHP: </strong><%= @languages["PHP"].to_i %> bytes </br>
                             <% @n = @n + 1 %>
                             <% @HTML += @languages["HTML"].to_i %>
                             <% @Ruby += @languages["Ruby"].to_i %>
@@ -62,11 +67,11 @@
                         <h4><u>Languages Total Information:</u></h4>
                         
                 <div class="col-md-12">
-                        <strong>HTML Total: </strong><%= @HTML %></br>
-                        <strong>Ruby Total: </strong><%= @Ruby %></br>
-                        <strong>JavaScript Total: </strong><%= @JavaScript %></br>
-                        <strong>CSS Total: </strong><%= @CSS %></br>
-                        <strong>PHP Total: </strong><%= @PHP %></br>
+                        <strong>HTML Total: </strong><%= @HTML %> bytes</br>
+                        <strong>Ruby Total: </strong><%= @Ruby %> bytes</br>
+                        <strong>JavaScript Total: </strong><%= @JavaScript %> bytes</br>
+                        <strong>CSS Total: </strong><%= @CSS %> bytes</br>
+                        <strong>PHP Total: </strong><%= @PHP %> bytes</br>
                 
                     <% else %>
                         <% flash[:danger] = "User entered has no public Repos" %>
